@@ -50,7 +50,7 @@ class GUI:
 		self.canvas.grid(row = 2, column = 0, sticky = tkinter.NW, columnspan = 320)
 
         # The delay for how often the webcam feed updates
-		self.delay = 20 # For a 60 FPS cam 10ms is a good delay
+		self.delay = int(round((1/CAM_FPS) * 1000,0))
         
         # Updating the canvas with the latest frame
 		self.update()
