@@ -1,14 +1,15 @@
 # A class to get a frame from a webcam and convert it into a format that can be used with GUI's
 
 ## [Imports]
-import cv2  # Used to get the webcam feed
+import cv2      # Used to get the webcam feed
+import base64   # Used to convert the webcam frame into a base64 string
 
 ## Main Class
 #   Functions:
 #       Constructor - Initialises the camera from the camID the user supplies, sets cam height, width
 #                     and fps.
-#       getFrame    - Gets the current frame from the camera that is selected. Converts it into an rgb
-#                     frame array and returns is
+#       getFrame    - Gets the current frame from the camera that is selected. Converts it into an base64
+#                     string and returns is
 #       Destructor  - Makes sure the camera that was used is properly released so other apps can use it
 #   Variables:
 #       cam         - holds the cv2 camera object
@@ -32,8 +33,12 @@ class camera:
             raise IOError("Can not get Frame") 
         else:
 
-            # Converts the frame received from cv2 into an RGB array
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            # Encodes the frame into a png format
+            retval, frame = cv2.imencode('.png', frame)
+
+            # Converts the PNG to a base64 string
+            frame = base64.b64encode(frame)
+            frame = frame.decode("utf-8")
 
             # Returns the converted frame
             return frame

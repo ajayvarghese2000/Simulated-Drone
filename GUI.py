@@ -4,7 +4,6 @@
 ## [imports]
 import tkinter  # Used to draw the GUI accross systems
 import webcam   # Used to access the webcam
-import PIL.Image, PIL.ImageTk   # Used to convert the Frame from the webcam to a tkimage
 
 # Main Class
 #   Functions:
@@ -51,7 +50,7 @@ class GUI:
 		self.canvas.grid(row = 2, column = 0, sticky = tkinter.NW, columnspan = 320)
 
         # The delay for how often the webcam feed updates
-		self.delay = 10 # For a 60 FPS cam 10ms is a good delay
+		self.delay = 20 # For a 60 FPS cam 10ms is a good delay
         
         # Updating the canvas with the latest frame
 		self.update()
@@ -80,8 +79,8 @@ class GUI:
         # Gets the latest frame from the cam
 		frame = self.camsource.getFrame()
 
-        # Converts the RGB array into a tkinter image
-		self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
+        # Takes the frame and sets it as the picture
+		self.photo = tkinter.PhotoImage(data=frame)
 
         # Adds the new frame to the canvas
 		self.canvas.create_image(0, 0, image = self.photo, anchor = tkinter.NW)
