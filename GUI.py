@@ -2,8 +2,13 @@
 # and display's the webcam feed
 
 ## [imports]
-import tkinter  # Used to draw the GUI accross systems
+from time import sleep
+import tkinter
+
+from pydantic.tools import T  # Used to draw the GUI accross systems
 import webcam   # Used to access the webcam
+from drone import drone
+from threading import Thread
 
 # Main Class
 #   Functions:
@@ -14,7 +19,7 @@ class GUI:
 
     # Constructor class, sets GUI up
     #   Takes in, the name of the GUI, the parameters of the cam, and a drone name
-	def __init__(self, window_title, CAMID, CAM_HEIGHT, CAM_WIDTH, CAM_FPS, DNAME):
+	def __init__(self, window_title, CAMID, CAM_HEIGHT, CAM_WIDTH, CAM_FPS, DNAME, URL):
 
         # Initialises the tkinter window
 		self.window = tkinter.Tk()
@@ -25,12 +30,18 @@ class GUI:
         # Setting the Window size
 		self.window.geometry("642x415")
 
+		# Setting the on_close protocol
+		self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
+
         # Getting the webcam feed
 		self.camsource = webcam.camera(CAMID,CAM_WIDTH,CAM_HEIGHT,CAM_FPS)
 
+		# Creating the Drone element
+		self.drone = drone(DNAME, URL)
+
         # Creating 2 buttons to connect to server and start data transfer
-		self.b1 = tkinter.Button(self.window, text = "Connect to Server")
-		self.b2 = tkinter.Button(self.window, text = "Start Data Transfer")
+		self.b1 = tkinter.Button(self.window, text = "Connect to Server", command=self.connect)
+		self.b2 = tkinter.Button(self.window, text = "Start Data Transfer", command=self.datatransfer)
 		self.b1.grid(row = 0, column = 0 , sticky=tkinter.W)
 		self.b2.grid(row = 1, column = 0 , sticky=tkinter.W)
 
@@ -77,13 +88,41 @@ class GUI:
 	def update(self):
 
         # Gets the latest frame from the cam
-		frame = self.camsource.getFrame()
+		self.frame = self.camsource.getFrame()
 
         # Takes the frame and sets it as the picture
-		self.photo = tkinter.PhotoImage(data=frame)
+		self.photo = tkinter.PhotoImage(data=self.frame)
 
         # Adds the new frame to the canvas
 		self.canvas.create_image(0, 0, image = self.photo, anchor = tkinter.NW)
 
         # Loops through at the given delay on a seprate thread
 		self.window.after(self.delay, self.update)
+	
+	def datatransfer(self):
+		self.sending = True
+		send = Thread(target=self.sendimage)
+		send.start()
+		return
+	
+	def sendimage(self):
+		while self.sending == True:
+			self.drone.senddata(self.frame)
+			sleep(1/30)
+		
+		return
+
+	def connect(self):
+		self.drone.connect()
+		return
+	
+	def on_closing(self):
+		self.sending = False
+		
+		try:
+			self.drone.disconnect()
+		except:
+			print("error closing connection, was it even active?")
+		
+		self.window.destroy()
+		return

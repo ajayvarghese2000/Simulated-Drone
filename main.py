@@ -16,14 +16,15 @@ from GUI import GUI				# Used for making the GUI instance
 from threading import Thread	# Used to multithread the GUI instances
 
 ## [Instance Variables]
-CAMID = 2 			# The Cam ID, usually 0, but if you have many cams attached it may change
-CAM_HEIGHT = 360	# The height of the camera frame, higher you go, slower preformace (don't change unless needed)
-CAM_WIDTH = 640		# The width of the camera frame, higher you go, slower preformace (don't change unless needed)
-CAM_FPS = 60		# The FPS of the camera frame, higher you go, slower preformace (don't change unless needed)
-D_NAME = "0"		# The drone name that will be registered on the server, keep it simple
+CAMID = 2 			        # The Cam ID, usually 0, but if you have many cams attached it may change
+CAM_HEIGHT = 360	        # The height of the camera frame, higher you go, slower preformace (don't change unless needed)
+CAM_WIDTH = 640		        # The width of the camera frame, higher you go, slower preformace (don't change unless needed)
+CAM_FPS = 60		        # The FPS of the camera frame, higher you go, slower preformace (don't change unless needed)
+D_NAME = 0		            # The drone name that will be registered on the server, keep it int
+URL = "http://localhost"    # URL of the host server
 
 # Creating a new thread to start the GUI on
-thread1 = Thread(target=GUI, args=("Drone-Sim", CAMID, CAM_HEIGHT, CAM_WIDTH, CAM_FPS, D_NAME))
+thread1 = Thread(target=GUI, args=("Drone-Sim", CAMID, CAM_HEIGHT, CAM_WIDTH, CAM_FPS, D_NAME, URL))
 thread1.start()
 
 ### If you have multiple cameras you can run multiple instances of the GUI
