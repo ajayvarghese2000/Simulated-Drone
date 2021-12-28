@@ -13,14 +13,21 @@ class drone:
         return
     
     def connect(self):
-        registration = requests.post(self.url + "/drones/" + str(self.dname))
-        self.sock = socketio.Client(logger=False, engineio_logger=False)
-        self.sock.connect(self.url, socketio_path="/ws/socket.io/") 
+        try:
+            registration = requests.post(self.url + "/drones/" + str(self.dname))
+            self.sock = socketio.Client(logger=False, engineio_logger=False)
+            self.sock.connect(self.url, socketio_path="/ws/socket.io/")
+            return 1
+        except:
+            return 0
     
     def disconnect(self):
-        deregistration = requests.post(self.url + "/removedrone/" + str(self.dname))
-        self.sock.disconnect()
-        return
+        try:
+            deregistration = requests.post(self.url + "/removedrone/" + str(self.dname))
+            self.sock.disconnect()
+            return 1
+        except:
+            return 0
 
     def senddata(self, frame):
 
