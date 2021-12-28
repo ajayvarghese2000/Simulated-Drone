@@ -30,8 +30,8 @@ This program simulates the final drone that the team plans to build. It is used 
 - [Data Transfer](#Data-Transfer)
 	- [What is a websocket?](#What-is-a-websocket)
 	- [Data Schema](#Data-Schema)
-		- [Example data packet](Example-data-packet)
-	- [What are base64 encoded images?](What-are-base64-encoded-images)
+		- [Example data packet](#Example-data-packet)
+	- [What are base64 encoded images?](#What-are-base64-encoded-images)
 
 ------------
 
