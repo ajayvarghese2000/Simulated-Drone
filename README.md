@@ -29,6 +29,9 @@ This program simulates the final drone that the team plans to build. It is used 
 - [Getting Started](#Getting-Started)
 - [Data Transfer](#Data-Transfer)
 	- [What is a websocket?](#What-is-a-websocket)
+	- [Data Schema](#Data-Schema)
+		- [Example data packet](Example-data-packet)
+	- [What are base64 encoded images?](What-are-base64-encoded-images)
 
 ------------
 
@@ -83,13 +86,73 @@ The data is sent to the server via a SocketIO websocket connection. It also has 
 ### What is a websocket?
 When sending data between a server and client there are a few options on how that can be done. 
 
-The common way is to continually ping the server using a HTTP request with new data. This is ok when you don't care about when you get/send the data.<p align="center"><img src="https://user-images.githubusercontent.com/58085441/147598344-f10cdace-6e2a-4d4c-9db1-752fee740c42.gif" height=200/></p>
+The common way is to continually ping the server using a HTTP request with new data. This is ok for small amounts of data and when you are not interested in a real-time response.
 
-When it comes to real-time communication, this is a bad choice as it acts a bit like a shot-gun sending data randomly with no regard for when it gets processed or if the server is overwhelmed.
+<p align="center">
+	<img src="https://user-images.githubusercontent.com/58085441/147609412-9e345cd1-a7ac-4e0e-b510-7f1388b9c068.gif" height=200/>
+</p>
 
-If you want to send data real-time, the best method is to open a websocket on the server. This acts like a hole/queue the drone can send data to. Then when the server is ready is can load the queue and process however it wants.
+However, when it comes to real-time communication, this is a bad choice as it acts like a shot-gun sending data randomly with no regard for when it gets processed or if the server is overwhelmed. This is especially the case when you are sending large amounts of data over a short amount of time.
+
+Furthermore, with HTTP requests there is additional overhead as each request must be handled by the server. 
+
+If you want to send data real-time, a good method is to open a websocket on the server. This acts like a queue the drone can send data continuously to. This eliminates the extra overheads with HTTP request as once the websocket is open not additional handling of the data is done.
+
+Then when the server is ready is can load the queue and process however it wants.
 <p align="center">
 	<img src="https://user-images.githubusercontent.com/58085441/147597894-db29d4ec-ee9f-4362-91dc-f7d4878dd6e9.gif" height=200/>
 </p>
 
-In this case, the data is forwarded to the dashboard where it is displayed to the user.
+In this case, the data is forwarded to the dashboard where it is displayed to the user. The dashboard is also connected via a websocket to the server, it uses that connection to request data about a particular drone that is connected.
+
+### Data Schema
+As mentioned before the data that is sent is in a very specific format. If the data sent is not following the established format it will not be processed correctly.
+
+The data from the drone is sent as a JSON packet. ([What is JSON?](https://www.w3schools.com/whatis/whatis_json.asp))
+
+#### Example data packet:
+
+```
+{
+	"dname": int, 		# The ID of the drone that is registered on the server
+	"temp": float,		# The value of the temperature sensor
+	"pressure": float,	# The value of the pressure sensor
+	"humidity": float,	# The value of the humidity sensor
+	"lux": float,		# The value of the light sensor
+	"geiger": int,		# The value of the geiger counter
+	"gas": {		# Sub-object to hold the values from the gas sensor
+		"co": float,	# The Carbon Monoxide reading from the gas sensor
+    		"no2": float,	# The Nitrogen Dioxide reading from the gas sensor
+    		"nh3": float	# The Ammonia reading from the gas sensor
+  	},
+  	"air": {		# Sub-object to hold the values from the particulates sensor
+    		"pm1": float,	# The value of PM1 particulates in the air
+    		"pm2_5": float,	# The value of PM2.5 particulates in the air
+    		"pm10": float	# The value of PM10 particulates in the air
+  	},
+  	"gps": {		# Sub-object to hold the values from the GPS sensor
+    		"lat": float,	# The latitudinal position of the drone
+    		"long": float	# The longitudinal position of the drone
+  	},
+  	"cam": base64,		# The image from the object-detection camera base64 encoded
+  	"tcam": base64		# The image from the thermal camera base64 encoded
+}
+```
+
+Most of the data in the data packet is self-explanatory with exception of the base64 encoded images.
+
+### What are base64 encoded images?
+The images that are received from the cameras on the drones will be raw binary data. 
+
+The dashboard needs the newest frame from the drone to display to the user however, if we send the raw binary data in the data packet, it would make the size of the packet very large, hard to read and, longer to parse through.
+
+base64 encoding takes the raw binary data and encodes it in base64, this gives a much smaller string that can be inserted into the data packet. [More on base64](https://en.wikipedia.org/wiki/Base64)
+
+The best way to send the camera feeds would be to encode a video on the drone of the last few seconds then upload that chuck to the server just like how YouTube and Twitch work. This way, you can take advantage of modern compression algorithms to make the data as small as possible.
+
+However that would not be good for this use case as:
+
+1. The hardware the firmware is deployed on is not very powerful. Having to encode a video as well as run object-detection and getting values from sensors will overwhelm it.
+2. It would increase the latency as the server will have to 1st wait for the chuck to be encoded, then uploaded.
+
+Base64 does have its disadvantages, namely that it take about 33% more resources to encode and decode when compared to binary data. However, most modern devices will be able to handel that increase without issue.
