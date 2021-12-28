@@ -1,5 +1,3 @@
-tkinter
 python-socketio
 requests
 opencv-python
-base64
