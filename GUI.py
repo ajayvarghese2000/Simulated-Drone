@@ -174,6 +174,9 @@ class GUI:
 				# Updating the connection variable
 				self.connected = False
 
+				# Updates the button to say start again
+				self.b2["text"] = "Start Data Transfer"
+
 				# Exiting function
 				return
 			
