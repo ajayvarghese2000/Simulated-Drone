@@ -1,5 +1,5 @@
 <p align="center">
-	<a href="https://github.com/lboroWMEME-TeamProject/CCC-ProjectDocs"><img src="https://i.imgur.com/VwT4NrJ.png"></a>
+	<a href="https://github.com/lboroWMEME-TeamProject/CCC-ProjectDocs"><img src="https://i.imgur.com/VwT4NrJ.png" width=650></a>
 	<p align="center"> This repository is part of  a collection for the 21WSD001 Team Project. 
 	All other repositories can be access below using the buttons</p>
 </p>
