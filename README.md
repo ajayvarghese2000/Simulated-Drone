@@ -1,6 +1,6 @@
 <p align="center">
 	<img src="https://i.imgur.com/VwT4NrJ.png">
-  	This repo is part of  a collection for the 21WSD001 Team Project. 
+This repo is part of  a collection for the 21WSD001 Team Project. 
 All other repos can be access below using the buttons
 </p>
 
