@@ -28,7 +28,7 @@ This program simulates the final drone that the team plans to build. It is used 
 - [Installation](#Installation)
 - [Getting Started](#Getting-Started)
 - [Data Transfer](#Data-Transfer)
-	- [What is a websocket?](#What-is-a-websocket?)
+	- [What is a websocket?](#What-is-a-websocket)
 
 ------------
 
@@ -65,7 +65,7 @@ The ones that will most likely need changing is the `CAMID`, `URL` and the `D_NA
 
 `CAMID` is the ID of the webcam you have plugged in, it is normally 0.
 
-`URL` is the URL of the server to send data to, refer to the [Cloud Server](https://github.com/ajayvarghese2000/Cloud-Serve) documentation to learn how to deploy one.
+`URL` is the URL of the server to send data to, refer to the [Cloud Server](https://github.com/ajayvarghese2000/Cloud-Server) documentation to learn how to deploy one.
 
 `D_NAME` is the name of the drone that will be registered with the server.
 
