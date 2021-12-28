@@ -76,6 +76,8 @@ Once you have defined those variables, you are good to run the script. It should
 
 Hit the button to connect to the server then you will be able to send data.
 
+**The program may hang whist it attempts a connection to the server, just wait patiently until it connects or times out**
+
 If the camera you see is not the one you expect, just close the window and change the `CAMID` variable.
 
 ------------
