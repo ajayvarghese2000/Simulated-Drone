@@ -27,6 +27,8 @@ This program simulates the final drone that the team plans to build. It is used 
 
 - [Installation](#Installation)
 - [Getting Started](#Getting-Started)
+- [Data Transfer](#Data-Transfer)
+	- [What is a websocket?](#What-is-a-websocket?)
 
 ------------
 
@@ -75,4 +77,19 @@ If the camera you see is not the one you expect, just close the window and chang
 
 ------------
 
-## Payload Schema
+## Data Transfer
+The data is sent to the server via a SocketIO websocket connection. It also has a predefined schema, if the schema is not followed the dashboard will not accept the data.
+
+### What is a websocket?
+When sending data between a server and client there are a few options on how that can be done. 
+
+The common way is to continually ping the server using a HTTP request with new data. This is ok when you don't care about when you get/send the data.<p align="center"><img src="https://user-images.githubusercontent.com/58085441/147598344-f10cdace-6e2a-4d4c-9db1-752fee740c42.gif" height=200/></p>
+
+When it comes to real-time communication, this is a bad choice as it acts a bit like a shot-gun sending data randomly with no regard for when it gets processed or if the server is overwhelmed.
+
+If you want to send data real-time, the best method is to open a websocket on the server. This acts like a hole/queue the drone can send data to. Then when the server is ready is can load the queue and process however it wants.
+<p align="center">
+	<img src="https://user-images.githubusercontent.com/58085441/147597894-db29d4ec-ee9f-4362-91dc-f7d4878dd6e9.gif" height=200/>
+</p>
+
+In this case, the data is forwarded to the dashboard where it is displayed to the user.
