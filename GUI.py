@@ -1,5 +1,8 @@
 # A class to create and display the GUI that allows connection to the server
 # and display's the webcam feed
+#
+#   Written by Team CCC
+#
 
 ## [imports]
 from datetime import datetime
@@ -12,9 +15,12 @@ from drone import drone			# Used to generate data from sensors and send info
 #     Constructor   - Sets up up the GUI and starts to draw it
 #     update        - Allows for updating of the webcam feed
 #     updatemessage - Allows to update the status box and make it uneditable
+#	  datatransfer	- Handles the toggling between starting/stopping the data transfer
+# 	  connect		- Handles the toggling between connecting/disconnecting the server
+#	  on_closing	- Cleans up loose connecting when the window is closed
 class GUI:
 
-    # Constructor class, sets GUI up
+    # Constructor function, sets GUI up
     #   Takes in, the name of the GUI, the parameters of the cam, and a drone name
 	def __init__(self, window_title, CAMID, CAM_HEIGHT, CAM_WIDTH, CAM_FPS, DNAME, URL):
 
@@ -118,53 +124,95 @@ class GUI:
 	# Function to handel if the client sends data to the server or not
 	def datatransfer(self):
 
+		# Checks if the client is connected to the server
 		if self.connected == False:
+
+			# If the client is not connected we return as no data should be sent
 			self.updatemessage("Not connected to server")
 			return
 		
+		# Handles the toggle betwen starting and stopping data to be sent
 		if self.sending == True:
+
+			# As sending was originals true, the client now turns off sending
 			self.sending = False
+
+			# Updates the button to say start again
 			self.b2["text"] = "Start Data Transfer"
 			return
 		
+		# If sending was false, we now turn it back on
 		self.sending = True
+
+		# Changes the button to say Stop
 		self.b2["text"] = "Stop Data Transfer"
 
+		# returning back to the main loop
 		return
 	
 	# Function to handel the connection between the server and the client
 	def connect(self):
 		
+		# Disconnect code
 		if self.connected == True:
+
+			# Attempts disconnection, if return is 1 then it was successful
 			if self.drone.disconnect() == 1:
+
+				# Updating the button
 				self.b1["text"] = "Connect to Server"
+
+				# Updating the connection status
 				self.label["text"] = "Status : Disconnected"
+
+				# Updating the debug log
 				self.updatemessage("Disconnected from server")
+
+				# Turning sending off
 				self.sending = False
+
+				# Updating the connection variable
 				self.connected = False
+
+				# Exiting function
 				return
+			
+			# If there is a disconnection failure alert user then exit
 			self.updatemessage("Failed to disconnect")
 			return
 		
+		# Attempts a connection to server, if return is 1 then it was successful
 		if self.drone.connect() == 1:
+
+			# Updates the connection variable
 			self.connected = True
+
+			# Updating the connection status
 			self.label["text"] = "Status : Connected"
+
+			# Updating the button text
 			self.b1["text"] = "Disconnect from Server"
+
+			# Adding a message to the debug log then exiting
 			self.updatemessage("Connected to server")
 			return
 		
+		# If there is a issue with connecting, issue a message the return
 		self.updatemessage("Failed to connect to server")
 		return
 	
 	# Function to clean up any connections when the user closes the window without
 	# Disconnecting from the server
 	def on_closing(self):
+
+		# Turn off sending and disable the connected variable
 		self.sending = False
 		self.connected = False
 
+		# Attempt a disconnect, if it fails print to console
 		if self.drone.disconnect() == 0:
 			print("error closing connection, was it even active?")
 			
-		
+		# destroy the tkinter window
 		self.window.destroy()
 		return

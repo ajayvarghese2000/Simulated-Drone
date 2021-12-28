@@ -1,5 +1,5 @@
-opencv-python
-Pillow
-imutils
 tkinter
+python-socketio
+requests
+opencv-python
 base64

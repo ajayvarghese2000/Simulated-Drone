@@ -1,4 +1,7 @@
 # A class to get a frame from a webcam and convert it into a format that can be used with GUI's
+#
+#   Written by Team CCC
+#
 
 ## [Imports]
 import cv2      # Used to get the webcam feed

@@ -10,22 +10,26 @@
 # This program is used to simulate the final drones communications to the cloud server
 # Will be used to test the servers endpoints and the GUI's representation of data without
 # the need of the physicall drone built
+#
+#   Written by Team CCC
+#
 
 ## [Imports]
 from GUI import GUI				# Used for making the GUI instance
 from threading import Thread	# Used to multithread the GUI instances
 
 ## [Instance Variables]
-CAMID = 2 			        # The Cam ID, usually 0, but if you have many cams attached it may change
-CAM_HEIGHT = 360	        # The height of the camera frame, higher you go, slower preformace (don't change unless needed)
-CAM_WIDTH = 640		        # The width of the camera frame, higher you go, slower preformace (don't change unless needed)
-CAM_FPS = 30		        # The FPS of the camera frame, higher you go, slower preformace (don't change unless needed)
-D_NAME = 0		            # The drone name that will be registered on the server, keep it int
-URL = "http://ajayvarghese.me"    # URL of the host server
+CAMID = 2 			            # The Cam ID, usually 0, but if you have many cams attached it may change
+CAM_HEIGHT = 360	            # The height of the camera frame, higher you go, slower preformace (don't change unless needed)
+CAM_WIDTH = 640		            # The width of the camera frame, higher you go, slower preformace (don't change unless needed)
+CAM_FPS = 30		            # The FPS of the camera frame, higher you go, slower preformace (don't change unless needed)
+D_NAME = 0		                # The drone name that will be registered on the server, keep it int
+URL = "http://ajayvarghese.me"  # URL of the host server
 
 # Creating a new thread to start the GUI on
 thread1 = Thread(target=GUI, args=("Drone-Sim", CAMID, CAM_HEIGHT, CAM_WIDTH, CAM_FPS, D_NAME, URL))
 thread1.start()
 
 ### If you have multiple cameras you can run multiple instances of the GUI
-### However, remember to change the CAMID you can not open the same cam twice
+### However, remember to change the CAMID and D_NAME you can not open the same cam twice
+### or register the same drone twice - the server will delete the old one
