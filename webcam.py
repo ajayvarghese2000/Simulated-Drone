@@ -4,9 +4,9 @@
 #
 
 ## [Imports]
-import cv2      # Used to get the webcam feed
-import base64   # Used to convert the webcam frame into a base64 string
-from ai_detect import detector
+import cv2                      # Used to get the webcam feed
+import base64                   # Used to convert the webcam frame into a base64 string
+from ai_detect import detector  # Used to run the frame generated through the neural net
 
 ## Main Class
 #   Functions:
