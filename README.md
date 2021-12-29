@@ -18,7 +18,7 @@
 This program simulates the final drone that the team plans to build. It is used to test the server, the communication protocols and, the dashboard that will display the data; without the need of the physical system.
 
 <p align="center">
-	<img src="https://user-images.githubusercontent.com/58085441/147592966-a34ca00c-efd3-440f-91ae-e7551c80b545.png"/>
+	<img src="https://user-images.githubusercontent.com/58085441/147684635-d3843a5e-3fd5-459b-b2f4-55e78eb80755.png"/>
 </p>
 
 ------------
@@ -65,6 +65,9 @@ CAM_WIDTH = 640		            	# The width of the camera frame, higher you go, sl
 CAM_FPS = 30		            	# The FPS of the camera frame, higher you go, slower performance (don't change unless needed)
 D_NAME = 0		                # The drone name that will be registered on the server, keep it int
 URL = "http://localhost"  		# URL of the host server
+WEIGHTS = "detection models/yolov4-tiny.weights"    # Files path to the detection model weights
+CFG = "detection models/yolov4-tiny.cfg"            # Files path to the detection model configuration
+COCO= "detection models/coco.names"                 # Files path to the COCO name data set
 ```
 The ones that will most likely need changing is the `CAMID`, `URL` and the `D_NAME`.
 
@@ -73,6 +76,14 @@ The ones that will most likely need changing is the `CAMID`, `URL` and the `D_NA
 `URL` is the URL of the server to send data to, refer to the [Cloud Server](https://github.com/ajayvarghese2000/Cloud-Server) documentation to learn how to deploy one.
 
 `D_NAME` is the name of the drone that will be registered with the server.
+
+`WEIGHTS` is the file path to the trained detection weights model
+
+`CFG` is the file path to the configuration file for the weights model
+
+`COCO` is the file path for the coco training names dataset
+
+*This repository comes with both the YOLOv3-Tiny and YOLOv4-Tiny trained models*
 
 Once you have defined those variables, you are good to run the script. It should open up a window like the one pictured above.
 
