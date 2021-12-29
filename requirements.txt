@@ -1,3 +1,4 @@
 python-socketio
 requests
 opencv-python
+numpy
