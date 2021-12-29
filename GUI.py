@@ -22,7 +22,7 @@ class GUI:
 
     # Constructor function, sets GUI up
     #   Takes in, the name of the GUI, the parameters of the cam, and a drone name
-	def __init__(self, window_title, CAMID, CAM_HEIGHT, CAM_WIDTH, CAM_FPS, DNAME, URL):
+	def __init__(self, window_title, CAMID, CAM_HEIGHT, CAM_WIDTH, CAM_FPS, DNAME, URL, WEIGHTS, CFG, COCO):
 
         # Initialises the tkinter window
 		self.window = tkinter.Tk()
@@ -37,7 +37,7 @@ class GUI:
 		self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
 
         # Getting the webcam feed
-		self.camsource = webcam.camera(CAMID,CAM_WIDTH,CAM_HEIGHT,CAM_FPS)
+		self.camsource = webcam.camera(CAMID,CAM_WIDTH,CAM_HEIGHT,CAM_FPS, WEIGHTS, CFG, COCO)
 
 		# Creating the Drone element
 		self.drone = drone(DNAME, URL)
@@ -129,6 +129,10 @@ class GUI:
 
 			# If the client is not connected we return as no data should be sent
 			self.updatemessage("Not connected to server")
+
+			# Updates the button to say start again
+			self.b2["text"] = "Start Data Transfer"
+
 			return
 		
 		# Handles the toggle betwen starting and stopping data to be sent
@@ -174,8 +178,8 @@ class GUI:
 				# Updating the connection variable
 				self.connected = False
 
-				# Updates the button to say start again
-				self.b2["text"] = "Start Data Transfer"
+				# Updating the send data button
+				self.datatransfer()
 
 				# Exiting function
 				return

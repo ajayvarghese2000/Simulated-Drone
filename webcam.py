@@ -6,6 +6,7 @@
 ## [Imports]
 import cv2      # Used to get the webcam feed
 import base64   # Used to convert the webcam frame into a base64 string
+from ai_detect import detector
 
 ## Main Class
 #   Functions:
@@ -36,6 +37,9 @@ class camera:
             raise IOError("Can not get Frame") 
         else:
 
+            # Takes the frame given then runs it through the detection
+            frame = self.detector.detect(frame)
+
             # Encodes the frame into a png format
             retval, frame = cv2.imencode('.png', frame)
 
@@ -49,7 +53,7 @@ class camera:
     # The constructor function, sets up the camera to get frames from
     #   Takes in, the ID, width and fps of the camera
     #   returns nothing - will raise an error if the camera failed to open
-    def __init__(self,camID, width, height, fps):
+    def __init__(self,camID, width, height, fps, WEIGHTS, CFG, COCO):
 
         # Uses cv2 to capture the camera using DirectShow
         self.cam = cv2.VideoCapture(camID,cv2.CAP_DSHOW)
@@ -65,6 +69,9 @@ class camera:
         self.cam.set(cv2.CAP_PROP_FRAME_WIDTH, width)
         self.cam.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
         self.cam.set(cv2.CAP_PROP_FPS, fps)
+
+        # Creating the detection object so frames can be passed through
+        self.detector = detector(WEIGHTS, CFG, COCO)
         
         return
 

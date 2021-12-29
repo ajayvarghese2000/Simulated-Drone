@@ -25,9 +25,12 @@ CAM_WIDTH = 640		            # The width of the camera frame, higher you go, slo
 CAM_FPS = 30		            # The FPS of the camera frame, higher you go, slower performance (don't change unless needed)
 D_NAME = 0		                # The drone name that will be registered on the server, keep it int
 URL = "http://ajayvarghese.me"  # URL of the host server
+WEIGHTS = "detection models/yolov4-tiny.weights"    # Files path to the detection model weights
+CFG = "detection models/yolov4-tiny.cfg"            # Files path to the detection model configuration
+COCO= "detection models/coco.names"                 # Files path to the COCO name data set
 
 # Creating a new thread to start the GUI on
-thread1 = Thread(target=GUI, args=("Drone-Sim", CAMID, CAM_HEIGHT, CAM_WIDTH, CAM_FPS, D_NAME, URL))
+thread1 = Thread(target=GUI, args=("Drone-Sim", CAMID, CAM_HEIGHT, CAM_WIDTH, CAM_FPS, D_NAME, URL, WEIGHTS, CFG, COCO))
 thread1.start()
 
 ### If you have multiple cameras you can run multiple instances of the GUI
