@@ -152,11 +152,11 @@ The dashboard needs the newest frame from the drone to display to the user howev
 
 base64 encoding takes the raw binary data and encodes it in base64, this gives a much smaller string that can be inserted into the data packet. [More on base64](https://en.wikipedia.org/wiki/Base64)
 
-The best way to send the camera feeds would be to encode a video on the drone of the last few seconds then upload that chuck to the server just like how YouTube and Twitch work. This way, you can take advantage of modern compression algorithms to make the data as small as possible.
+The best way to send the camera feeds would be to encode a video on the drone of the last few seconds then upload that chuck to the server just like how YouTube and Twitch work. This way, you can take advantage of modern video compression algorithms to make the data as small as possible.
 
 However that would not be good for this use case as:
 
-1. The hardware the firmware is deployed on is not very powerful. Having to encode a video as well as run object-detection and getting values from sensors will overwhelm it.
-2. It would increase the latency as the server will have to 1st wait for the chuck to be encoded, then uploaded.
+1. The hardware the drone firmware is deployed on is not very powerful. Having to encode a video as well as run object-detection and getting values from sensors will overwhelm it.
+2. It would increase the latency as the server will have to first wait for the chuck to be encoded, then uploaded.
 
 Base64 does have its disadvantages, namely that it take about 33% more resources to encode and decode when compared to binary data. However, most modern devices will be able to handel that increase without issue.
