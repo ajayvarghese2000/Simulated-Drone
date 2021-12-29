@@ -28,7 +28,14 @@ class detector:
         
         # Getting the names ant processing layers from the YOLO weights model
         self.layer_names = self.net.getLayerNames()
-        self.output_layers = [self.layer_names[i[0] - 1] for i in self.net.getUnconnectedOutLayers()]
+        try:
+
+            # For CPU versions of openCV
+            self.output_layers = [self.layer_names[i - 1] for i in self.net.getUnconnectedOutLayers()]
+        except:
+
+            # For CUDA versions of openCV
+            self.output_layers = [self.layer_names[i[0] - 1] for i in self.net.getUnconnectedOutLayers()]
 
         # Creating colors for the detection boxes to use
         self.colors = np.random.uniform(0, 255, size=(len(self.classes), 3))
