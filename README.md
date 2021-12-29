@@ -38,7 +38,7 @@ This program simulates the final drone that the team plans to build. It is used 
 ## Installation
 First clone the repository to a directory on your system. If you have git installed you can use the following command.
 ```
-git clone https://github.com/ajayvarghese2000/Simulated-Drone
+git clone https://github.com/ajayvarghese2000/Simulated-Drone.git
 ```
 This program is written in python 3, if you don't have it installed download it from the [python website](https://www.python.org/downloads/).
 Once python is installed open up a terminal in the directory you cloned the repository and install the dependencies required using pip. It is recommended to use a python virtual environment to avoid conflicts.
