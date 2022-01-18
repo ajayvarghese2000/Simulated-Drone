@@ -6,10 +6,10 @@
 
 <p align="center">
 	<a href="https://github.com/lboroWMEME-TeamProject/CCC-ProjectDocs"><img src="https://i.imgur.com/rBaZyub.png" alt="drawing" height = 33/></a> 
-	<a href="https://github.com/ajayvarghese2000/Dashboard"><img src="https://i.imgur.com/fz7rgd9.png" alt="drawing" height = 33/></a> 
-	<a href="https://github.com/ajayvarghese2000/Cloud-Server"><img src="https://i.imgur.com/bsimXcV.png" alt="drawing" height = 33/></a> 
+	<a href="https://github.com/lboroWMEME-TeamProject/Dashboard"><img src="https://i.imgur.com/fz7rgd9.png" alt="drawing" height = 33/></a> 
+	<a href="https://github.com/lboroWMEME-TeamProject/Cloud-Server"><img src="https://i.imgur.com/bsimXcV.png" alt="drawing" height = 33/></a> 
 	<a><img src="https://i.imgur.com/yKFokIL.png" alt="drawing" height = 33/></a> 
-	<a href="https://github.com/ajayvarghese2000/Simulated-Drone"><img src="https://i.imgur.com/WMOZbrf.png" alt="drawing" height = 33/></a>
+	<a href="https://github.com/lboroWMEME-TeamProject/Simulated-Drone"><img src="https://i.imgur.com/WMOZbrf.png" alt="drawing" height = 33/></a>
 </p>
 
 ------------
@@ -38,7 +38,7 @@ This program simulates the final drone that the team plans to build. It is used 
 ## Installation
 First clone the repository to a directory on your system. If you have git installed you can use the following command.
 ```
-git clone https://github.com/ajayvarghese2000/Simulated-Drone.git
+git clone https://github.com/lboroWMEME-TeamProject/Simulated-Drone.git
 ```
 This program is written in python 3, if you don't have it installed download it from the [python website](https://www.python.org/downloads/).
 Once python is installed open up a terminal in the directory you cloned the repository and install the dependencies required using pip. It is recommended to use a python virtual environment to avoid conflicts.
@@ -73,7 +73,7 @@ The ones that will most likely need changing is the `CAMID`, `URL` and the `D_NA
 
 `CAMID` is the ID of the webcam you have plugged in, it is normally 0.
 
-`URL` is the URL of the server to send data to, refer to the [Cloud Server](https://github.com/ajayvarghese2000/Cloud-Server) documentation to learn how to deploy one.
+`URL` is the URL of the server to send data to, refer to the [Cloud Server](https://github.com/lboroWMEME-TeamProject/Cloud-Server) documentation to learn how to deploy one.
 
 `D_NAME` is the name of the drone that will be registered with the server.
 
