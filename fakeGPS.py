@@ -1,15 +1,31 @@
+# A class to simulate some GPS positions within a perscribed area
+#
+#   Written by Team CCC
+#
+
+## [imports]
 from random import random, seed, randint    # Used to generate random data values
 
+# Main Class
+#   Functions:
+#     Constructor   - Sets up up the fakeGPS with limits and defaults
+#     getPos        - Returns the long and lat
+#     genLAT        - Generates a lat post based on info from previous pos
+#     getLONG       - Generates a long post based on info from previous pos
 class GPS:
     def __init__(self):
+
+        ## [Default Values] (centred around Loughborough)
         self.MAXLONG = -1.187
         self.MINLONG = -1.265
         self.MAXLAT= 52.779
         self.MINLAT = 52.761
         self.LAT = 52.77
         self.LONG = -1.226
-        self.LAT_SCALER = 0.0011
-        self.LONG_SCALER = 0.00055
+
+        ## Scale values to move the possitions about by
+        self.LAT_SCALER  = 0.00055
+        self.LONG_SCALER = 0.0024
         return
 
     def getPos(self):
@@ -26,7 +42,7 @@ class GPS:
         if(direction == 1):
 
             # Create a random movement
-            self.LAT = self.LAT + (random()*self.LAT_SCALER)
+            self.LAT = self.LAT + (self.LAT_SCALER)
 
             # Check if we've gone past the max
             if (self.LAT >= self.MAXLAT):
@@ -34,11 +50,11 @@ class GPS:
         
             return
         
-        self.LAT = self.LAT - (random()*self.LAT_SCALER)
+        self.LAT = self.LAT - (self.LAT_SCALER)
 
         # Check if we've gone past the max
         if (self.LAT <= self.MINLAT):
-            self.LAT = self.MAXLAT
+            self.LAT = self.MINLAT
     
         return
     
@@ -50,7 +66,7 @@ class GPS:
         if(direction == 1):
 
             # Create a random movement
-            self.LONG = self.LONG + (random()*self.LONG_SCALER)
+            self.LONG = self.LONG + (self.LONG_SCALER)
 
             # Check if we've gone past the max
             if (self.LONG >= self.MAXLONG):
@@ -59,7 +75,7 @@ class GPS:
             return
 
         # Create a random movement
-        self.LONG = self.LONG - (random()*self.LONG_SCALER)
+        self.LONG = self.LONG - (self.LONG_SCALER)
 
         # Check if we've gone past the max
         if (self.LONG <= self.MINLONG):
