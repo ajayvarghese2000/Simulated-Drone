@@ -8,6 +8,7 @@
 from random import random, seed, randint    # Used to generate random data values
 import socketio                             # Used to connect to the servers websocket
 import requests                             # Allows to send API requests to the server
+from fakeGPS import GPS
 
 # Main Class
 #   Functions:
@@ -30,6 +31,9 @@ class drone:
 
         # Sets the seed to generate data with
         seed(1)
+
+        # Initiating the GPS sensor
+        self.GPS = GPS()
 
         return
     
@@ -162,8 +166,10 @@ class drone:
         # Creating the gps data structure to be inside the payload
         gps = {}
 
-        gps["lat"] = round(random(),5)
-        gps["long"] = round(random(),5)
+        # gps["lat"] = round(random(),5)
+        # gps["long"] = round(random(),5)
+
+        gps["lat"], gps["long"] = self.GPS.getPos()
         
         return gps
 
