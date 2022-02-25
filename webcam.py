@@ -36,6 +36,7 @@ class camera:
             # Raises an error if the program can not get a frame
             raise IOError("Can not get Frame") 
         else:
+            thermal_frame = self.thermal(frame)
 
             # Takes the frame given then runs it through the detection
             frame = self.detector.detect(frame)
@@ -47,8 +48,11 @@ class camera:
             frame = base64.b64encode(frame)
             frame = frame.decode("utf-8")
 
+            thermal_frame = base64.b64encode(thermal_frame)
+            thermal_frame = thermal_frame.decode("utf-8")
+
             # Returns the converted frame
-            return frame
+            return frame, thermal_frame
     
     # The constructor function, sets up the camera to get frames from
     #   Takes in, the ID, width and fps of the camera
@@ -82,3 +86,8 @@ class camera:
         self.cam.release()
         cv2.destroyAllWindows()
         return
+    
+    def thermal(self, frame):
+        heatmap = cv2.applyColorMap(frame, cv2.COLORMAP_HOT)
+        retval, frame = cv2.imencode('.png', heatmap)
+        return frame
