@@ -6,7 +6,8 @@
 
 ## [Imports]
 import cv2          # Used to detect objects
-import numpy as np  # Used to get object cordinates
+import numpy as np
+from sqlalchemy import false, true  # Used to get object cordinates
 
 # Main Class
 #   Functions:
@@ -44,7 +45,8 @@ class detector:
 
     # The detection function, runs a cv2 frame through the network to detect objects
     #       Takes in a cv2 frame
-    #       returns a cv2 frame with labels and boxes drawn for objects
+    #       returns a cv2 frame with labels and boxes drawn for objects 
+    #       and a boolean for if there was a person detected.
     def detect(self, img):
 
         # Getting the height and width of the frame
@@ -94,6 +96,8 @@ class detector:
         # Setting the font for the names
         font = cv2.FONT_HERSHEY_PLAIN
 
+        person = False
+
         # Adding the boxes to the cv2 frame
         for i in range(len(boxes)):
             if i in indexes:
@@ -103,6 +107,11 @@ class detector:
 
                 # Setting the label and setting the colour
                 label = str(self.classes[class_ids[i]])
+                
+                # Checking if a person was found
+                if(label.lower() == 'person'):
+                    person = True
+                
                 color = self.colors[i]
 
                 # Drawing the rectangle onto the frame
@@ -112,4 +121,4 @@ class detector:
                 cv2.putText(img, label, (x, y - 10), font, 3, color, 2)
         
         # Returning the new frame back to the drone
-        return img
+        return img, person

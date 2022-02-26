@@ -81,7 +81,7 @@ class drone:
 
     # Allows to build the payload of data to be sent to the server via the websocket
     #   Takes in the frame from the webcam in Base64 format
-    def senddata(self, frame, tframe):
+    def senddata(self, frame, tframe, person):
 
         # Changing the seed to get random values
         seed(randint(0,1000000))
@@ -107,6 +107,8 @@ class drone:
 
         # As there is no thermal camera, for testing the thermal camera shows the same frame
         payload["tcam"] = tframe
+
+        payload["person"] = person
 
         # Attempts to send the payload over the websocket
         try:

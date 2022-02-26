@@ -97,8 +97,8 @@ class GUI:
     # Allows to update the canvas with the webcam feed with the latest frame
 	def update(self):
 
-        # Gets the latest frame from the cam
-		self.frame, self.thermal_frame = self.camsource.getFrame()
+        # Gets the latest frames and person variable from the cam
+		self.frame, self.thermal_frame, self.person = self.camsource.getFrame()
 
         # Takes the frame and sets it as the picture
 		self.photo = tkinter.PhotoImage(data=self.frame)
@@ -116,7 +116,7 @@ class GUI:
 			self.updatemessage(current_time + " Sent Data Packet")
 
 			# Insturcts the drone to send data over to the server
-			self.drone.senddata(self.frame, self.thermal_frame)
+			self.drone.senddata(self.frame, self.thermal_frame, self.person)
 
         # Loops through at the given delay on a seprate thread
 		self.window.after(self.delay, self.update)

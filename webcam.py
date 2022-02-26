@@ -25,6 +25,8 @@ class camera:
     # Gets the current frame from the selected camera
     #   Takes no inputs
     #   Returns a frame if successfully found or an error if it failed
+    #   a thermal fake of the frame
+    #   and if a person was found
     def getFrame(self):
 
         # Reads a frame, returns a  bool if it was successful
@@ -39,7 +41,7 @@ class camera:
             thermal_frame = self.thermal(frame)
 
             # Takes the frame given then runs it through the detection
-            frame = self.detector.detect(frame)
+            frame, person = self.detector.detect(frame)
 
             # Encodes the frame into a png format
             retval, frame = cv2.imencode('.png', frame)
@@ -52,7 +54,7 @@ class camera:
             thermal_frame = thermal_frame.decode("utf-8")
 
             # Returns the converted frame
-            return frame, thermal_frame
+            return frame, thermal_frame, person
     
     # The constructor function, sets up the camera to get frames from
     #   Takes in, the ID, width and fps of the camera

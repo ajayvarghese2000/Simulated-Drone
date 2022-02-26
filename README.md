@@ -150,7 +150,8 @@ The data from the drone is sent as a JSON packet. ([What is JSON?](https://www.w
     		"long": float	# The longitudinal position of the drone
   	},
   	"cam": base64,		# The image from the object-detection camera base64 encoded
-  	"tcam": base64		# The image from the thermal camera base64 encoded
+  	"tcam": base64,		# The image from the thermal camera base64 encoded
+	"person" : bool		# See if a person was detected or not
 }
 ```
 
