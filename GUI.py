@@ -9,6 +9,8 @@ from datetime import datetime
 import tkinter					# Used to draw the GUI accross systems
 import webcam   				# Used to access the webcam
 from drone import drone			# Used to generate data from sensors and send info
+from PIL import ImageTk
+import base64
 
 # Main Class
 #   Functions:
@@ -101,7 +103,7 @@ class GUI:
 		self.frame, self.thermal_frame, self.person = self.camsource.getFrame()
 
         # Takes the frame and sets it as the picture
-		self.photo = tkinter.PhotoImage(data=self.frame)
+		self.photo = ImageTk.PhotoImage(data=base64.b64decode(self.frame))
 
         # Adds the new frame to the canvas
 		self.canvas.create_image(0, 0, image = self.photo, anchor = tkinter.NW)
