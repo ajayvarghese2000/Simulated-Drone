@@ -32,6 +32,7 @@ This program simulates the final drone that the team plans to build. It is used 
 	- [Data Schema](#Data-Schema)
 		- [Example data packet](#Example-data-packet)
 	- [What are base64 encoded images?](#What-are-base64-encoded-images)
+- [Test Plan](#Test-Plan)
 
 ------------
 
@@ -172,3 +173,19 @@ However that would not be good for this use case as:
 2. It would increase the latency as the server will have to first wait for the chuck to be encoded, then uploaded.
 
 Base64 does have its disadvantages, namely that it take about 33% more resources to encode and decode when compared to binary data. However, most modern devices will be able to handel that increase without issue.
+
+
+## Test Plan
+
+<div align="center">
+
+|Objective|Testing Strategy|Expected Output|Current Output|Pass/Fail|
+|--|--|--|--|:--:|
+|Connect to the server|Get the drone to connect to the correct server endpoint then verify its connection using the API testing tools/GUI|A new drone should show up on the server|The correct drone is added to the server list.|:heavy_check_mark:|
+|Disconnect from the server|Get the drone to disconnect from the server using the correct endpoint then verify its status using the API testing tools/GUI|The drone should be removed from the server list|The correct drone is removed from the server list.|:heavy_check_mark:|
+|Display the camera feed|Run the program and see if the specified camera feed is displayed|The correct camera feed to be displayed in the camera box|The correct camera that is specified in the code is displayed.|:heavy_check_mark:|
+|Run the object detection neural network on the camera feed|Run the program and observer if it detects objects|Boxes should be drawn around the detected object and the object should be labelled|Boxes are draw around the object and are labelled correctly.|:heavy_check_mark:|
+|Connect to the server websocket|Run the program and attempt to connect to the server.|The client should report that a successful connection was made|The client does report a successful connection|:heavy_check_mark:|
+|Send the data packet to the server|Run the program, connect to the server and send the data. The data should be received by the server and sent to any GUI's connected. If the data is received by the GUI the it was successfully sent|The GUI displays the data correctly|The GUI does display the data correctly.|:heavy_check_mark:|
+
+</div>
