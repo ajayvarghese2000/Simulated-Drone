@@ -140,9 +140,9 @@ class drone:
         # Creating the gas data structure to be inside the payload
         gas = {}
 
-        gas["co"] = round(random(),2)
-        gas["no2"] = round(random(),2)
-        gas["nh3"] = round(random(),2)
+        gas["co"] = randint(0,4000)
+        gas["no2"] = randint(0,4000)
+        gas["nh3"] = randint(0,4000)
         
         return gas
     
@@ -152,9 +152,9 @@ class drone:
         # Creating the Air data structure to be inside the payload
         air = {}
         
-        air["pm1"] = round(random(),2)
-        air["pm2_5"] = round(random(),2)
-        air["pm10"] = round(random(),2)
+        air["pm1"] = randint(0,4000)
+        air["pm2_5"] = randint(0,4000)
+        air["pm10"] = randint(0,4000)
 
         return air
 
